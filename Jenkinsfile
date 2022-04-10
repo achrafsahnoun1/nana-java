@@ -1,28 +1,32 @@
-def gv
-
 pipeline {
     agent any
+    parameters {
+        choice(name: 'VERSION', choices: ['1.0','1.1'],description: '')
+    }
     stages {
-        stage("init") {
+        stage("build") {
+            when {
+                expression{
+                    params.VERSION == '1.0'
+                }
+            }
+            steps {
+                
+                echo "building the app"
+
+            }
+        }
+        stage("test") {
             steps {
                 script {
-                    gv = load "script.groovy"
+                    echo "testing the app"
                 }
             }
         }
-        stage("build jar") {
+        stage("deploy ") {
             steps {
                 script {
-                    echo "building jar"
-                    //gv.buildJar()
-                }
-            }
-        }
-        stage("build image") {
-            steps {
-                script {
-                    echo "building image"
-                    //gv.buildImage()
+                    echo "deploying the app"
                 }
             }
         }
