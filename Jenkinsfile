@@ -2,7 +2,7 @@ df gv
 pipeline {
     agent any
     tools{
-        maven 'MAVEN'
+        maven 'maven-3.8'
     }
  
     stages {
@@ -23,7 +23,7 @@ pipeline {
                     }
                 }
             }
-        }
+        
         stage("deploy ") {
             steps {
                 script {
@@ -32,5 +32,6 @@ pipeline {
                 }
             }
         }
+    }
        
     }   
