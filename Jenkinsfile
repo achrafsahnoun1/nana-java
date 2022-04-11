@@ -1,33 +1,26 @@
+df gv
 pipeline {
     agent any
-    parameters {
-        choice(name: 'VERSION', choices: ['1.0','1.1'],description: '')
+    tools{
+        maven 'MAVEN'
     }
+ 
     stages {
-        stage("build") {
-            when {
-                expression{
-                    params.VERSION == '1.0'
-                }
-            }
+        stage("build app") {
+           
             steps {
-                
-                echo "building the app"
-
+                script{
+                    
+                    gv.buildJar()
+                }
             }
         }
-        stage("test") {
-            input{
-                message "select env"
-                ok "Done"
-                parameters{
-                    choice(name: 'ENV', choices: ['dev','prod'],description: '')
-
-                }
-            }
+        stage("Building the image") {
+            
             steps {
                 script {
-                    echo "testing the app in ${ENV}"
+                    gv.buildImage()
+                    }
                 }
             }
         }
